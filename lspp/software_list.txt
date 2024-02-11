@@ -1,0 +1,6 @@
+vim
+bash-completion
+firewalld
+net-tools
+python3
+tree
