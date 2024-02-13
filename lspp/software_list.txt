@@ -4,3 +4,4 @@ firewalld
 net-tools
 python3
 tree
+mailx
