@@ -71,7 +71,7 @@ def create_three_admin():
         time.sleep(5)
         os.system('setfacl -Rm u:sysadmin:rwx /home /media /mnt')
         os.system('setfacl -Rm u:sysadmin:rwx /etc /opt /dev /run /usr')
-        os.system('setfacl -Rm u:sysadmin:rwx /var /proc')
+        os.system('setfacl -Rm u:sysadmin:rwx /var')
 
         # Fixing permissions
         #os.system('setfacl -Rb /var/empty/sshd/')
