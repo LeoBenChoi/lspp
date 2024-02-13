@@ -58,20 +58,19 @@ def create_three_admin():
         # PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
         print('正在进行命令权限配置, 时间较长, 请勿中途退出...')
         time.sleep(5)
-        #os.system("echo -e 'sysadmin\tALL=(ALL)\tALL' >> /etc/sudoers")
-        #os.system("echo -e 'secadmin\tALL=(ALL)\tALL' >> /etc/sudoers")
-        #os.system("echo -e 'audadmin\tALL=(ALL)\tALL' >> /etc/sudoers")
-        #os.system("echo -e 'sysadmin\tALL=(ALL)\tNOPASSWD: ALL' >> /etc/sudoers")
-        os.system("echo -e 'sysadmin\tALL=(ALL)\tNOPASSWD: /usr/sbin/useradd, /usr/sbin/userdel, /usr/sbin/groupadd, /usr/sbin/groupdel, /usr/bin/passwd' >> /etc/sudoers")
-        os.system("echo -e 'secadmin\tALL=(ALL)\tNOPASSWD: ALL' >> /etc/sudoers")
+        os.system("echo -e 'sysadmin\tALL=(ALL)\tALL' >> /etc/sudoers")
+        os.system("echo -e 'secadmin\tALL=(ALL)\tALL' >> /etc/sudoers")
+        os.system("echo -e 'audadmin\tALL=(ALL)\tALL' >> /etc/sudoers")
+
+        os.system("echo -e 'sysadmin\tALL=(ALL)\tNOPASSWD: ALL' >> /etc/sudoers")
+        os.system("echo -e 'secadmin\tALL=(ALL)\tNOPASSWD: /usr/sbin/useradd, /usr/sbin/userdel, /usr/sbin/groupadd, /usr/sbin/groupdel, /usr/bin/passwd' >> /etc/sudoers")
         os.system("echo -e 'audadmin\tALL=(ALL)\tNOPASSWD: /usr/bin/cat, /usr/bin/tac, /usr/bin/less, /usr/bin/more, /usr/bin/tail, /usr/bin/head' >> /etc/sudoers")
 
         # Init permission (path) 
         print('正在进行访问权限配置, 时间较长, 请勿中途退出...')
         time.sleep(5)
-        #os.system('setfacl -Rm u:sysadmin:rwx /home /media /mnt /etc/passwd /etc/group /etc/gshadow /etc/subuid /etc/subgid /etc/shadow /etc/group /etc/gshadow')
-        os.system('setfacl -Rm u:sysadmin:rwx /home /media /mnt ')
-        os.system('setfacl -Rm u:secadmin:rwx /etc /opt /dev /run /usr')
+        os.system('setfacl -Rm u:sysadmin:rwx /home /mnt /etc /opt /run /var')
+        #os.system('setfacl -Rm u:secadmin:rwx')
         os.system('setfacl -Rm u:audadmin:rwx /var')
 
         # Fixing permissions
@@ -107,9 +106,20 @@ def create_safe_group():
         # Create group is safe, and only safe group can use su root
         os.system("groupadd safe")
         # user add safe group
-        os.system("usermod -aG safe sysadmin")
-        os.system("usermod -aG safe secadmin")
-        os.system("usermod -aG safe audadmin")
+        print('将sysadmin加入wheel组')
+        os.system("usermod -G wheel sysadmin")
+        time.sleep(1)
+        print('将secadmin加入wheel组')
+        os.system("usermod -G wheel secadmin")
+        time.sleep(1)
+        print('将audadmin加入wheel组')
+        os.system("usermod -G wheel audadmin")
+        time.sleep(1)
+
+        # only wheel group users can use su
+        print('配置只有wheel组能够使用su')
+        os.system("sed -i 's/#auth\t\tsufficient\tpam_wheel.so trust use_uid/auth\t\tsufficient\tpam_wheel.so trust use_uid/g' /etc/pam.d/su")
+        os.system("sed -i 's/#auth\t\trequired\tpam_wheel.so use_uid/auth\t\trequired\tpam_wheel.so use_uid/g' /etc/pam.d/su")
 
         # write flag
         os.system('echo "完成创建, 写入flag"')
