@@ -69,12 +69,13 @@ def create_three_admin():
         # Init permission (path) 
         print('正在进行访问权限配置, 时间较长, 请勿中途退出...')
         time.sleep(5)
-        os.system('setfacl -Rm u:sysadmin:rwx /home /media /mnt /etc/passwd /etc/group /etc/gshadow /etc/subuid /etc/subgid /etc/shadow /etc/group /etc/gshadow')
+        #os.system('setfacl -Rm u:sysadmin:rwx /home /media /mnt /etc/passwd /etc/group /etc/gshadow /etc/subuid /etc/subgid /etc/shadow /etc/group /etc/gshadow')
+        os.system('setfacl -Rm u:sysadmin:rwx /home /media /mnt ')
         os.system('setfacl -Rm u:secadmin:rwx /etc /opt /dev /run /usr')
         os.system('setfacl -Rm u:audadmin:rwx /var')
 
         # Fixing permissions
-        #os.system('setfacl -Rb /var/empty/sshd/')
+        os.system('setfacl -Rb /var/empty/sshd/')
         os.system('setfacl -Rb /etc/ssh/')
     
         # 加入root组
