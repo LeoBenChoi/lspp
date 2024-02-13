@@ -8,39 +8,87 @@ import flag
 
 # create admin user
 def create_three_admin():
+    print('''
+    三员账号:
+        系统管理员: sysadmin
+            权限: 系统配置，有配置etc目录下所有文件的权限
+        安全管理员: secadmin
+            权限: 安全配置，可以创建、删除、锁定、解锁用户
+        审计管理员: aduadmin
+            描述: 日志审计，有查看日志的权限
+    ''')    
+        
+    time.sleep(5)
+
     # Judgment
     if flag.judge_flag('create_three_admin') == True:
-        print('已经创建三员账号')
+        print('已经创建过三员账号')
         time.sleep(5)
     elif flag.judge_flag('create_three_admin') == False:
 
-        # Create user is system admin
+        # Create users
+        print('准备创建三员账号')
+        time.sleep(3)
         print('准备创建系统管理员: sysadmin')
-        time.sleep(5)
+        time.sleep(3)
         os.system("useradd sysadmin")
-        os.system("echo 'sysadmin:sysadmin' | chpasswd")
-        print('系统管理员创建完成...')
-        
-        # Create user is security admin
+        print('系统管理员创建...')
         print('准备创建安全管理员: secadmin')
-        time.sleep(5)
+        time.sleep(3)
         os.system("useradd secadmin")
-        os.system("echo 'secadmin:secadmin' | chpasswd")
-        print('安全管理员创建完成...')
-
-        # Create user is audit admin
+        print('安全管理员创建...')
         print('准备创建审计管理员: audadmin')
-        time.sleep(5)
+        time.sleep(3)
         os.system("useradd audadmin")
+        print('审计管理员创建...')
+
+        # Init password
+        print('给三员账号分配初始密码')
+        time.sleep(3)
+        os.system("echo 'sysadmin:sysadmin' | chpasswd")
+        os.system("echo 'secadmin:secadmin' | chpasswd")
         os.system("echo 'audadmin:audadmin' | chpasswd")
-        print('审计管理员创建完成...')
+        print('设置三员第一次登录账号需要更改密码...')
+        time.sleep(3)
+        os.system('chage -d 0 sysadmin')
+        os.system('chage -d 0 secadmin')
+        os.system('chage -d 0 audadmin')
+
+        # Init permission (write sudoers)
+        # PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
+        print('正在进行命令权限配置, 时间较长, 请勿中途退出...')
+        time.sleep(5)
+        #os.system("echo -e 'sysadmin\tALL=(ALL)\tALL' >> /etc/sudoers")
+        #os.system("echo -e 'secadmin\tALL=(ALL)\tALL' >> /etc/sudoers")
+        #os.system("echo -e 'audadmin\tALL=(ALL)\tALL' >> /etc/sudoers")
+        #os.system("echo -e 'sysadmin\tALL=(ALL)\tNOPASSWD: ALL' >> /etc/sudoers")
+        os.system("echo -e 'sysadmin\tALL=(ALL)\tNOPASSWD: /usr/sbin/useradd, /usr/sbin/userdel, /usr/sbin/groupadd, /usr/sbin/groupdel, /usr/bin/passwd' >> /etc/sudoers")
+        os.system("echo -e 'secadmin\tALL=(ALL)\tNOPASSWD: ALL' >> /etc/sudoers")
+        os.system("echo -e 'audadmin\tALL=(ALL)\tNOPASSWD: /usr/bin/cat, /usr/bin/tac, /usr/bin/less, /usr/bin/more, /usr/bin/tail, /usr/bin/head' >> /etc/sudoers")
+
+        # Init permission (path) 
+        print('正在进行访问权限配置, 时间较长, 请勿中途退出...')
+        time.sleep(5)
+        os.system('setfacl -Rm u:sysadmin:rwx /home /media /mnt')
+        os.system('setfacl -Rm u:sysadmin:rwx /etc /opt /dev /run /usr')
+        os.system('setfacl -Rm u:sysadmin:rwx /var /proc')
+
+        # Fixing permissions
+        #os.system('setfacl -Rb /var/empty/sshd/')
+        os.system('setfacl -Rb /etc/ssh/')
+    
 
         # write flag
         os.system('echo "完成创建, 写入flag"')
         os.system('echo "create_three_admin" >> flag')
 
+
+
 # create safe group
 def create_safe_group():
+    print('创建safe安全组，当然这不是必须的，只有safe组里的成员能够访问su到root')    
+    time.sleep(5)
+
     # Judgment
     if flag.judge_flag('create_safe_group') == True:
         print('已经创建安全组')
