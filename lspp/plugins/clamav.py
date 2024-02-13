@@ -28,10 +28,7 @@ def init_clamav():
     os.system('useradd clamav')
     os.system("echo 'clamav:clamav' | chpasswd")
     print('创建用户完成, 准备创建日志文件夹...')
-    os.system('mkdir -p /var/log/clamav')
     os.system('mkdir -p /var/log/clamav/virus')
-    print('创建日志文件...')
-    os.system('touch /var/log/clamav/clamav.log')
     time.sleep(3)    
     print("创建日志文件夹完成, 开始配置clamav...")
     time.sleep(5)
@@ -46,9 +43,9 @@ def init_clamav():
     os.system("echo '0 0 * * * clamscan -r -i  --log=/var/log/clamav/clamav.log --copy=/var/log/clamav/virus/ --exclude-dir=/var/log/clamav/virus --exclude-dir=/sys /' >> /var/spool/cron/root")
     print('完成创建自动任务')
     time.sleep(3)
-    print('初始化完成...')
+    print('初始化完成, 将要进行安装完成之后的第一次扫描...')
     time.sleep(5)
-
+    clamav_scan()
 
 def clamav_scan():
     os.system('clamscan -r -i  --log=/var/log/clamav/clamav.log --move=/var/log/clamav/virus/ --exclude-dir=/var/log/clamav/virus --exclude-dir=/sys /')
