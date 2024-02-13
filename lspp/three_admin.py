@@ -69,14 +69,20 @@ def create_three_admin():
         # Init permission (path) 
         print('正在进行访问权限配置, 时间较长, 请勿中途退出...')
         time.sleep(5)
-        os.system('setfacl -Rm u:sysadmin:rwx /home /media /mnt /etc/passwd')
-        os.system('setfacl -Rm u:sysadmin:rwx /etc /opt /dev /run /usr')
-        os.system('setfacl -Rm u:sysadmin:rwx /var')
+        os.system('setfacl -Rm u:sysadmin:rwx /home /media /mnt /etc/passwd /etc/group /etc/gshadow /etc/subuid /etc/subgid /etc/shadow')
+        os.system('setfacl -Rm u:secadmin:rwx /etc /opt /dev /run /usr')
+        os.system('setfacl -Rm u:audadmin:rwx /var')
 
         # Fixing permissions
-        os.system('setfacl -Rb /var/empty/sshd/')
+        #os.system('setfacl -Rb /var/empty/sshd/')
         os.system('setfacl -Rb /etc/ssh/')
     
+        # 加入root组
+        print('将三员加入root组')
+        time.sleep(3)
+        os.system('usermod -aG root sysadmin')
+        os.system('usermod -aG root secadmin')
+        os.system('usermod -aG root audadmin')
 
         # write flag
         os.system('echo "完成创建, 写入flag"')
@@ -100,9 +106,9 @@ def create_safe_group():
         # Create group is safe, and only safe group can use su root
         os.system("groupadd safe")
         # user add safe group
-        os.system("useradd -aG safe sysadmin")
-        os.system("useradd -aG safe secadmin")
-        os.system("useradd -aG safe audadmin")
+        os.system("usermod -aG safe sysadmin")
+        os.system("usermod -aG safe secadmin")
+        os.system("usermod -aG safe audadmin")
 
         # write flag
         os.system('echo "完成创建, 写入flag"')
