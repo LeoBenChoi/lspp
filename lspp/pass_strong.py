@@ -20,6 +20,8 @@ def login_reinforce():
         print('已经完成过登录安全加固')
         time.sleep(5)
     elif flag.judge_flag('login_reinforce') == False:
+        print('准备进行登录安全加固...')
+        time.sleep(5)
         # Maximum number of logins.
         os.system('sed -i "1 i auth required pam_tally2.so onerr=fail deny=5 unlock_time=300" /etc/pam.d/system-auth')
 
@@ -48,6 +50,8 @@ def pass_reinforce():
         print('已经完成过密码安全加固')
         time.sleep(5)
     elif flag.judge_flag('pass_reinforce') == False:
+        print('准备进行密码安全加固...')
+        time.sleep(5)
         # Strong password.
         os.system('echo "password requisite pam_cracklib.so retry=3 difok=1 minlen=8 ucredit=-1  lcredit=-1  dcredit=-1  ocredit=-1 minclass=4" >> /etc/pam.d/common-password')
 
