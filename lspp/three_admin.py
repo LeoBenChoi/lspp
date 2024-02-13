@@ -74,7 +74,7 @@ def create_three_admin():
         os.system('setfacl -Rm u:sysadmin:rwx /var')
 
         # Fixing permissions
-        #os.system('setfacl -Rb /var/empty/sshd/')
+        os.system('setfacl -Rb /var/empty/sshd/')
         os.system('setfacl -Rb /etc/ssh/')
     
 
