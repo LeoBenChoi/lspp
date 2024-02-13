@@ -8,7 +8,7 @@ import time
 
 # firewall list
 def firewall_status():
-    os.system("sudo firewall-cmd --list-all")
+    os.system("firewall-cmd --list-all")
 
 # prohibit ping
 def ping_off():
