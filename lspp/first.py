@@ -13,7 +13,7 @@ def main_part():
     if  flag.judge_flag('first') == True:
         os.system('echo "已经进行过初始化, 准备跳过脚本..."')
         time.sleep(3)
-        print
+
     elif  flag.judge_flag('first') == False:
         os.system('echo "即将开始准备初始环境..."')
 
@@ -24,8 +24,7 @@ def main_part():
         os.system("curl -o /etc/yum.repos.d/aliyun.repo http://mirrors.aliyun.com/repo/Centos-7.repo")
         os.system("sed -i 's/http/https/g' /etc/yum.repos.d/aliyun.repo")
         os.system("yum clean all")
-        os.system("yum makecache")
-        print 
+        os.system("yum makecache")   
 
         # install software
         with open("software_list.txt", "r") as f:
