@@ -12,7 +12,7 @@ def login_reinforce():
     os.system('echo "设置密码输入次数..."')
     os.system('echo "输入错误5次"')
     os.system('echo "锁定300秒"')
-    os.system('echo "设置安全组, 只有safe安全组能使用su"')
+    os.system('echo "设置安全组, 只有wheel安全组能使用su"')
     print()
 
     # Judgment
@@ -52,7 +52,7 @@ def pass_reinforce():
     elif flag.judge_flag('pass_reinforce') == False:
         print('准备进行密码安全加固...')
         time.sleep(5)
-        # Strong password.
+        # Strong password.(A a 1 ! 4)
         os.system('echo "password requisite pam_cracklib.so retry=3 difok=1 minlen=8 ucredit=-1  lcredit=-1  dcredit=-1  ocredit=-1 minclass=4" >> /etc/pam.d/common-password')
 
         # Maximum number of days a password may be used.
