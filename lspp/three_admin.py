@@ -69,7 +69,7 @@ def create_three_admin():
         # Init permission (path) 
         print('正在进行访问权限配置, 时间较长, 请勿中途退出...')
         time.sleep(5)
-        os.system('setfacl -Rm u:sysadmin:rwx /home /mnt /etc /opt /run /var')
+        os.system('setfacl -Rm u:sysadmin:rwx /home /mnt /etc /opt /run')
         #os.system('setfacl -Rm u:secadmin:rwx')
         os.system('setfacl -Rm u:audadmin:rwx /var')
 
