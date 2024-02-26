@@ -48,11 +48,11 @@ def create_three_admin():
         os.system("echo 'sysadmin:sysadmin' | chpasswd")
         os.system("echo 'secadmin:secadmin' | chpasswd")
         os.system("echo 'audadmin:audadmin' | chpasswd")
-        print('设置三员第一次登录账号需要更改密码...')
-        time.sleep(3)
-        os.system('chage -d 0 sysadmin')
-        os.system('chage -d 0 secadmin')
-        os.system('chage -d 0 audadmin')
+        #print('设置三员第一次登录账号需要更改密码...')
+        #time.sleep(3)
+        #os.system('chage -d 0 sysadmin')
+        #os.system('chage -d 0 secadmin')
+        #os.system('chage -d 0 audadmin')
 
         # Init permission (write sudoers)
         # PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
@@ -92,7 +92,7 @@ def create_three_admin():
 
 # create safe group
 def create_safe_group():
-    print('创建safe安全组，当然这不是必须的，只有safe组里的成员能够访问su到root')    
+    print('配置')    
     time.sleep(5)
 
     # Judgment
@@ -106,20 +106,9 @@ def create_safe_group():
         # Create group is safe, and only safe group can use su root
         os.system("groupadd safe")
         # user add safe group
-        print('将sysadmin加入wheel组')
-        os.system("usermod -G wheel sysadmin")
-        time.sleep(1)
-        print('将secadmin加入wheel组')
-        os.system("usermod -G wheel secadmin")
-        time.sleep(1)
-        print('将audadmin加入wheel组')
-        os.system("usermod -G wheel audadmin")
-        time.sleep(1)
-
-        # only wheel group users can use su
-        print('配置只有wheel组能够使用su')
-        os.system("sed -i 's/#auth\t\tsufficient\tpam_wheel.so trust use_uid/auth\t\tsufficient\tpam_wheel.so trust use_uid/g' /etc/pam.d/su")
-        os.system("sed -i 's/#auth\t\trequired\tpam_wheel.so use_uid/auth\t\trequired\tpam_wheel.so use_uid/g' /etc/pam.d/su")
+        os.system("usermod -aG safe sysadmin")
+        os.system("usermod -aG safe secadmin")
+        os.system("usermod -aG safe audadmin")
 
         # write flag
         os.system('echo "完成创建, 写入flag"')
