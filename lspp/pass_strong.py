@@ -13,6 +13,7 @@ def login_reinforce():
     os.system('echo "输入错误5次"')
     os.system('echo "锁定300秒"')
     os.system('echo "设置安全组, 只有wheel安全组能使用su"')
+    os.system('echo "禁止root用户使用远程登录"')
     print()
 
     # Judgment
@@ -27,6 +28,9 @@ def login_reinforce():
 
         # Only the "safe" group can enter the su root
         os.system('sed -i "1 i auth\t\trequired\t/lib/security/pam_wheel.so group=safe" /etc/pam.d/su')
+
+        # root do't use ssh
+        os.system("sed -i 's/#PermitRootLogin\ yes/PermitRootLogin\ no/g' /etc/ssh/sshd_config")
 
         # write flag
         os.system('echo "完成加固, 写入flag"')
