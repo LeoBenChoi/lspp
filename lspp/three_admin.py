@@ -57,11 +57,11 @@ def create_three_admin():
         # Init permission (write sudoers)
         # PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
         print('正在进行命令权限配置, 时间较长, 请勿中途退出...')
-        time.sleep(5)
+        #time.sleep(5)
 
-        os.system("echo -e 'sysadmin\tALL=(ALL)\t /usr/bin/vi,/usr/bin/vim /usr/share/vim' >> /etc/sudoers")
-        os.system("echo -e 'secadmin\tALL=(ALL)\t /usr/sbin/useradd, /usr/sbin/userdel, /usr/sbin/groupadd, /usr/sbin/groupdel, /usr/bin/passwd' >> /etc/sudoers")
-        os.system("echo -e 'audadmin\tALL=(ALL)\t /usr/bin/cat, /usr/bin/tac, /usr/bin/less, /usr/bin/more, /usr/bin/tail, /usr/bin/head' >> /etc/sudoers")
+        #os.system("echo -e 'sysadmin\tALL=(ALL)\t /usr/bin/vi,/usr/bin/vim /usr/share/vim' >> /etc/sudoers")
+        #os.system("echo -e 'secadmin\tALL=(ALL)\t /usr/sbin/useradd, /usr/sbin/userdel, /usr/sbin/groupadd, /usr/sbin/groupdel, /usr/bin/passwd' >> /etc/sudoers")
+        #os.system("echo -e 'audadmin\tALL=(ALL)\t /usr/bin/cat, /usr/bin/tac, /usr/bin/less, /usr/bin/more, /usr/bin/tail, /usr/bin/head' >> /etc/sudoers")
 
         #os.system("echo -e 'sysadmin\tALL=(ALL)\tNOPASSWD: ALL' >> /etc/sudoers")
         #os.system("echo -e 'secadmin\tALL=(ALL)\tNOPASSWD: /usr/sbin/useradd, /usr/sbin/userdel, /usr/sbin/groupadd, /usr/sbin/groupdel, /usr/bin/passwd' >> /etc/sudoers")
