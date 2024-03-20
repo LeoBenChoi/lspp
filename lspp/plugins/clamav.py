@@ -50,6 +50,7 @@ def init_clamav():
     clamav_scan()
 
 def clamav_scan():
+    os.system("freshclam")
     os.system('clamscan -r -i  --log=/var/log/clamav/clamav.log --move=/var/log/clamav/virus/ --exclude-dir=/var/log/clamav/virus --exclude-dir=/sys /')
 
 def clamav_view_logs():
