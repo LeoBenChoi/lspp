@@ -60,7 +60,7 @@ def create_three_admin():
         time.sleep(5)
 
         #os.system("echo -e 'sysadmin\tALL=(ALL)\t /usr/bin/vi,/usr/bin/vim /usr/share/vim' >> /etc/sudoers")
-        os.system("echo -e 'secadmin\tALL=(ALL)\t /usr/sbin/useradd, /usr/sbin/userdel, /usr/sbin/groupadd, /usr/sbin/groupdel, /usr/bin/passwd, /usr/sbin/usermod' >> /etc/sudoers")
+        os.system("echo -e 'secadmin\tALL=(ALL)\t /usr/sbin/useradd, /usr/sbin/userdel, /usr/sbin/groupadd, /usr/sbin/groupdel, /usr/bin/passwd, /usr/sbin/usermod, /sbin/pam_tally2' >> /etc/sudoers")
         #os.system("echo -e 'audadmin\tALL=(ALL)\t /usr/bin/cat, /usr/bin/tac, /usr/bin/less, /usr/bin/more, /usr/bin/tail, /usr/bin/head' >> /etc/sudoers")
 
         #os.system("echo -e 'sysadmin\tALL=(ALL)\tNOPASSWD: ALL' >> /etc/sudoers")
@@ -93,7 +93,7 @@ def create_three_admin():
 
 # create safe group
 def create_safe_group():
-    print('配置')    
+    print('配置安全组')    
     time.sleep(5)
 
     # Judgment
