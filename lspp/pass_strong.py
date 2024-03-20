@@ -27,7 +27,7 @@ def login_reinforce():
         os.system('sed -i "1 i auth required pam_tally2.so onerr=fail deny=5 unlock_time=300" /etc/pam.d/system-auth')
 
         # Only the "safe" group can enter the su root
-        os.system('sed -i "1 i auth\t\trequired\t/lib/security/pam_wheel.so group=safe" /etc/pam.d/su')
+        #os.system('sed -i "1 i auth\t\trequired\t/lib/security/pam_wheel.so group=safe" /etc/pam.d/su')
 
         # root do't use ssh
         os.system("sed -i 's/#PermitRootLogin\ yes/PermitRootLogin\ no/g' /etc/ssh/sshd_config")
