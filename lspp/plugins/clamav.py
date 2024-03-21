@@ -50,14 +50,15 @@ def init_clamav():
     os.system("echo 'clamscan -r -i  --log=/var/log/clamav/clamav.log --move=/var/log/clamav/virus/ --exclude-dir=/var/log/clamav/virus --exclude-dir=/sys /' > /home/sysadmin/clam.sh")
     os.system("echo 'clamscan -r -i  --log=/var/log/clamav/clamav.log --move=/var/log/clamav/virus/ --exclude-dir=/var/log/clamav/virus --exclude-dir=/sys /' > /home/secadmin/clam.sh")
     os.system("echo 'clamscan -r -i  --log=/var/log/clamav/clamav.log --move=/var/log/clamav/virus/ --exclude-dir=/var/log/clamav/virus --exclude-dir=/sys /' > /home/audadmin/clam.sh")
-    os.system('chown ben:ben /home/sysadmin/clam.sh')
-    os.system('chown ben:ben /home/secadmin/clam.sh')
-    os.system('chown ben:ben /home/audadmin/clam.sh')
+    os.system('chown sysadmin:sysadmin /home/sysadmin/clam.sh')
+    os.system('chown secadmin:secadmin /home/secadmin/clam.sh')
+    os.system('chown audadmin:audadmin /home/audadmin/clam.sh')
     os.system('chmod +x /home/sysadmin/clam.sh')
     os.system('chmod +x /home/secadmin/clam.sh')
     os.system('chmod +x /home/audadmin/clam.sh')
     print('初始化完成, 将要进行安装完成之后的第一次扫描...')
     time.sleep(5)
+    os.system('chmod 666 /var/log/clamav/clamav.log')
     clamav_scan()
 
 def clamav_scan():
