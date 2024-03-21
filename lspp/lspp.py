@@ -25,7 +25,7 @@ def print_title():
     print("""
     软件: Linux Sec ++
     作者: Lio Ben 
-    版本: v0.4.35
+    版本: v0.4.43
     项目地址: https://github.com/LioBenChoi/lspp/
     """)
     # 主要版本（结构）.次要版本（功能）.补丁（细节修改）
