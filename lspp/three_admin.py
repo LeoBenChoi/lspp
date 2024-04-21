@@ -48,24 +48,11 @@ def create_three_admin():
         os.system("echo 'sysadmin:sysadmin' | chpasswd")
         os.system("echo 'secadmin:secadmin' | chpasswd")
         os.system("echo 'audadmin:audadmin' | chpasswd")
-        #print('设置三员第一次登录账号需要更改密码...')
-        #time.sleep(3)
-        #os.system('chage -d 0 sysadmin')
-        #os.system('chage -d 0 secadmin')
-        #os.system('chage -d 0 audadmin')
-
-        # Init permission (write sudoers)
-        # PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
-        print('正在进行命令权限配置, 时间较长, 请勿中途退出...')
         time.sleep(5)
 
         os.system("echo -e 'sysadmin\tALL=(ALL)\t /usr/bin/vi,/usr/bin/vim /usr/share/vim, /usr/bin/rm' >> /etc/sudoers")
         os.system("echo -e 'secadmin\tALL=(ALL)\t /usr/sbin/useradd, /usr/sbin/userdel, /usr/sbin/groupadd, /usr/sbin/groupdel, /usr/bin/passwd, /usr/sbin/usermod, /sbin/pam_tally2, /usr/bin/rm' >> /etc/sudoers")
         os.system("echo -e 'audadmin\tALL=(ALL)\t /usr/bin/cat, /usr/bin/tac, /usr/bin/less, /usr/bin/more, /usr/bin/tail, /usr/bin/head, /usr/bin/rm' >> /etc/sudoers")
-
-        #os.system("echo -e 'sysadmin\tALL=(ALL)\tNOPASSWD: ALL' >> /etc/sudoers")
-        #os.system("echo -e 'secadmin\tALL=(ALL)\tNOPASSWD: /usr/sbin/useradd, /usr/sbin/userdel, /usr/sbin/groupadd, /usr/sbin/groupdel, /usr/bin/passwd' >> /etc/sudoers")
-        #os.system("echo -e 'audadmin\tALL=(ALL)\tNOPASSWD: /usr/bin/cat, /usr/bin/tac, /usr/bin/less, /usr/bin/more, /usr/bin/tail, /usr/bin/head' >> /etc/sudoers")
 
         # Init permission (path) 
         print('正在进行访问权限配置, 时间较长, 请勿中途退出...')
@@ -78,13 +65,6 @@ def create_three_admin():
         os.system('setfacl -Rb /var/empty/sshd/')
         os.system('setfacl -Rb /etc/ssh/')
     
-        # 加入root组
-        print('将三员加入root组')
-        time.sleep(3)
-        os.system('usermod -aG root sysadmin')
-        os.system('usermod -aG root secadmin')
-        os.system('usermod -aG root audadmin')
-
         # write flag
         os.system('echo "完成创建, 写入flag"')
         os.system('echo "create_three_admin" >> flag')
@@ -107,9 +87,9 @@ def create_safe_group():
         # Create group is safe, and only safe group can use su root
         os.system("groupadd safe")
         # user add safe group
-        os.system("usermod -aG safe sysadmin")
-        os.system("usermod -aG safe secadmin")
-        os.system("usermod -aG safe audadmin")
+        os.system("usermod -aG wheel sysadmin")
+        os.system("usermod -aG wheel secadmin")
+        os.system("usermod -aG wheel audadmin")
 
         # write flag
         os.system('echo "完成创建, 写入flag"')

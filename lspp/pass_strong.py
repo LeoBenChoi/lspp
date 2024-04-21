@@ -25,9 +25,11 @@ def login_reinforce():
         time.sleep(5)
         # Maximum number of logins.
         os.system('sed -i "1 i auth required pam_tally2.so onerr=fail deny=5 unlock_time=300" /etc/pam.d/system-auth')
+        os.system('sed -i "1 i auth required pam_tally2.so onerr=fail deny=5 unlock_time=300 even_deny_root root_unlock_time=300" /etc/pam.d/sshd')
+        os.system('sed -i "1 i auth required pam_tally2.so onerr=fail deny=5 unlock_time=300 even_deny_root root_unlock_time=300" /etc/pam.d/login')
 
         # Only the "safe" group can enter the su root
-        #os.system('sed -i "1 i auth\t\trequired\t/lib/security/pam_wheel.so group=safe" /etc/pam.d/su')
+        os.system('sed -i "1 i auth\t\trequired\t/lib/security/pam_wheel.so group=wheel" /etc/pam.d/su')
 
         # root do't use ssh
         os.system("sed -i 's/#PermitRootLogin\ yes/PermitRootLogin\ no/g' /etc/ssh/sshd_config")
