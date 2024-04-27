@@ -24,9 +24,7 @@ def login_reinforce():
         print('准备进行登录安全加固...')
         time.sleep(5)
         # Maximum number of logins.
-        os.system('sed -i "1 i auth required pam_tally2.so onerr=fail deny=5 unlock_time=300" /etc/pam.d/system-auth')
-        os.system('sed -i "1 i auth required pam_tally2.so onerr=fail deny=5 unlock_time=300 even_deny_root root_unlock_time=300" /etc/pam.d/sshd')
-        os.system('sed -i "1 i auth required pam_tally2.so onerr=fail deny=5 unlock_time=300 even_deny_root root_unlock_time=300" /etc/pam.d/login')
+        os.system('sed -i "1 i auth required pam_tally2.so onerr=fail deny=5 unlock_time=300 enforce_for_root" /etc/pam.d/system-auth')
 
         # Only the "safe" group can enter the su root
         os.system('sed -i "1 i auth\t\trequired\t/lib/security/pam_wheel.so group=wheel" /etc/pam.d/su')
@@ -59,7 +57,7 @@ def pass_reinforce():
         print('准备进行密码安全加固...')
         time.sleep(5)
         # Strong password.(A a 1 ! 4)
-        os.system('echo "password requisite pam_cracklib.so retry=3 difok=1 minlen=8 ucredit=-1  lcredit=-1  dcredit=-1  ocredit=-1 minclass=4 enforce_for_root" >> /etc/pam.d/common-password')
+        os.system('sed -i "s/password\ \ \ \ requisite\ \ \ \ \ pam_pwquality.so\ try_first_pass\ local_users_only\ retry=3\ authtok_type=/password\ \ \ \ requisite\ \ \ \ \ pam_pwquality.so\ try_first_pass\ local_users_only\ retry=3\ authtok_type=\ minlen=8\ lcredit=1\ ucredit=1\ dcredit=1\ ocredit=1\ difok=5\ enforce_for_root/g" /etc/pam.d/system-auth')
 
         # Maximum number of days a password may be used.
         os.system('sed -i "s/PASS_MAX_DAYS\t99999/PASS_MAX_DAYS\t90/" /etc/login.defs')
