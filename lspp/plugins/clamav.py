@@ -41,10 +41,6 @@ def init_clamav():
     time.sleep(5)
     os.system("freshclam")
     #print('更新病毒库完成, 准备创建自动任务...')
-    #os.system("echo '0 0 * * * clamscan -r -i  --log=/var/log/clamav/clamav.log --copy=/var/log/clamav/virus/ --exclude-dir=/var/log/clamav/virus --exclude-dir=/sys /' >> /var/spool/cron/root")
-    #os.system("echo '0 0 * * * clamscan -r -i  --log=/var/log/clamav/clamav.log --copy=/var/log/clamav/virus/ --exclude-dir=/var/log/clamav/virus --exclude-dir=/sys /' >> /var/spool/cron/clamav")
-    #print('完成创建自动任务')
-    #time.sleep(3)
     print('给管理员准备扫描病毒脚本')
     time.sleep(3)
     os.system("echo 'clamscan -r -i  --log=/var/log/clamav/clamav.log --move=/var/log/clamav/virus/ --exclude-dir=/var/log/clamav/virus --exclude-dir=/sys /' > /home/sysadmin/clam.sh")
@@ -58,7 +54,7 @@ def init_clamav():
     os.system('chmod +x /home/audadmin/clam.sh')
     print('初始化完成, 将要进行安装完成之后的第一次扫描...')
     time.sleep(5)
-    os.system('chmod 666 /var/log/clamav/clamav.log')
+    os.system('chmod 622 /var/log/clamav/clamav.log')
     clamav_scan()
 
 def clamav_scan():
