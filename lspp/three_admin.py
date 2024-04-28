@@ -11,13 +11,12 @@ def create_three_admin():
     print('''
     三员账号:
         系统管理员: sysadmin
-            权限: 系统配置，有配置etc目录下所有文件的权限
+            权限: /etc路径下所有文件的配置权限、应用启动与停止
         安全管理员: secadmin
-            权限: 安全配置，可以创建、删除、锁定、解锁用户
+            权限: 可以创建、删除、锁定、解锁用户
         审计管理员: aduadmin
-            描述: 日志审计，有查看日志的权限
-    ''')    
-        
+            描述: 日志审计，查看日志
+    ''')
     time.sleep(5)
 
     # Judgment
@@ -50,16 +49,15 @@ def create_three_admin():
         os.system("echo 'audadmin:audadmin' | chpasswd")
         time.sleep(5)
 
-        os.system("echo -e 'sysadmin\tALL=(ALL)\t /usr/bin/vi,/usr/bin/vim /usr/share/vim, /usr/bin/rm' >> /etc/sudoers")
+        os.system("echo -e 'sysadmin\tALL=(ALL)\t /usr/bin/vi,/usr/bin/vim, /usr/bin/rm' >> /etc/sudoers")
         os.system("echo -e 'secadmin\tALL=(ALL)\t /usr/sbin/useradd, /usr/sbin/userdel, /usr/sbin/groupadd, /usr/sbin/groupdel, /usr/bin/passwd, /usr/sbin/usermod, /sbin/pam_tally2, /usr/bin/rm' >> /etc/sudoers")
         os.system("echo -e 'audadmin\tALL=(ALL)\t /usr/bin/cat, /usr/bin/tac, /usr/bin/less, /usr/bin/more, /usr/bin/tail, /usr/bin/head, /usr/bin/rm' >> /etc/sudoers")
 
         # Init permission (path) 
         print('正在进行访问权限配置, 时间较长, 请勿中途退出...')
         time.sleep(5)
-        os.system('setfacl -Rm u:sysadmin:rwx /etc /opt')
-        #os.system('setfacl -Rm u:secadmin:rwx')
-        os.system('setfacl -Rm u:audadmin:rwx /var')
+        os.system('setfacl -Rm u:sysadmin:rwx /etc/ /opt/')
+        os.system('setfacl -Rm u:audadmin:rwx /var/log/')
 
         # Fixing permissions
         os.system('setfacl -Rb /var/empty/sshd/')
@@ -69,7 +67,8 @@ def create_three_admin():
         os.system('echo "完成创建, 写入flag"')
         os.system('echo "create_three_admin" >> flag')
 
-
+        # firewall file copy to /home/sysadmin/
+        os.system('cp ./firewall_set.py /home/sysadmin')
 
 # create safe group
 def create_safe_group():
@@ -85,7 +84,6 @@ def create_safe_group():
         print('准备创建安全组...')
         time.sleep(5)
         # Create group is safe, and only safe group can use su root
-        os.system("groupadd safe")
         # user add safe group
         os.system("usermod -aG wheel sysadmin")
         os.system("usermod -aG wheel secadmin")
@@ -99,7 +97,7 @@ def main_part():
     while(True):
         print("""功能列表:
         1. 创建三员账号
-        2. 创建安全组(用于提权,不建议使用)
+        2. 创建安全组
         0. 退出\n""")
         fun_select = input('选择功能(输入编号): ')
         try:

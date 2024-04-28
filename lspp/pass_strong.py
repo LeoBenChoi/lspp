@@ -12,7 +12,7 @@ def login_reinforce():
     os.system('echo "设置密码输入次数..."')
     os.system('echo "输入错误5次"')
     os.system('echo "锁定300秒"')
-    os.system('echo "设置安全组, 只有wheel安全组能使用su"')
+    os.system('echo "设置只有wheel安全组能使用su"')
     os.system('echo "禁止root用户使用远程登录"')
     print()
 
