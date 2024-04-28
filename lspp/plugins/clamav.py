@@ -28,7 +28,8 @@ def init_clamav():
     os.system('useradd clamav')
     os.system("echo 'clamav:clamav' | chpasswd")
     print('创建用户完成, 准备创建日志文件夹...')
-    os.system('mkdir -p /var/log/clamav/virus')
+    os.system('mkdir -p /var/log/clamav/virus/')
+    os.system('chmod 777 /var/log/clamav/virus/')
     os.system('chown -R clamav:clamav /var/log/clamav')
     time.sleep(3)    
     print("创建日志文件夹完成, 开始配置clamav...")
@@ -54,8 +55,8 @@ def init_clamav():
     os.system('chmod +x /home/audadmin/clam.sh')
     print('初始化完成, 将要进行安装完成之后的第一次扫描...')
     time.sleep(5)
-    os.system('chmod 622 /var/log/clamav/clamav.log')
     clamav_scan()
+    os.system('chmod 666 /var/log/clamav/clamav.log')
 
 def clamav_scan():
     os.system("freshclam")
