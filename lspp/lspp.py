@@ -25,8 +25,8 @@ def print_title():
     print("""
     软件: Linux Sec ++
     作者: Lio Ben 
-    版本: v0.4.43
-    项目地址: https://github.com/LioBenChoi/lspp/
+    版本: v0.2.13
+    项目地址: https://gitee.com/lio_ben_choi/lspp
     """)
     # 主要版本（结构）.次要版本（功能）.补丁（细节修改）
 
@@ -40,7 +40,7 @@ def main_part():
         2. 三员安全账号创建
         3. 防火墙配置(可选)
         
-    扩展模块:
+    集成模块:
         4. 病毒扫描
 
         0. 退出""")
